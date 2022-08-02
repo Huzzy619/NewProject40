@@ -205,9 +205,10 @@ DJOSER = {
 
 
 # EMAIL_BACKEND  = 'django.core.mail.backends.smtp.EmailBackend' 
+
 EMAIL_HOST = 'localhost'
-EMAIL_PORT = 2525
-EMAIL_USERNAME = ''
-EMAIL_PASSWORD = ''
+EMAIL_PORT = config('EMAIL_PORT')
+EMAIL_USERNAME = config('EMAIL_USERNAME')
+EMAIL_PASSWORD = config('EMAIL_PASSWORD')
 
 #USE_TLS = True
