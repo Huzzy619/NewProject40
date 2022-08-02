@@ -172,23 +172,26 @@ SIMPLE_JWT = {
    'ACCESS_TOKEN_LIFETIME': timedelta(days=5),
 }
 
+SITE_NAME = ('Studebt')
+
 DJOSER = {
     
 
     #'LOGIN_FIELD': 'reg_no',
     
-    # 'ACTIVATION_URL': '/activate/{uid}/{token}',
+    'ACTIVATION_URL': 'activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': True,
 
-    # 'PASSWORD_RESET_CONFIRM_URL': '/password/reset/confirm/{uid}/{token}',
-    # 'PASSWORD_RESET_CONFIRM_RETYPE':True,
-    # 'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
-    # 'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True,
-    # 'USER_CREATE_PASSWORD_RETYPE': False, 
+    'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
+    'PASSWORD_RESET_CONFIRM_RETYPE':True,
+    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
+    'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True,
+    'USER_CREATE_PASSWORD_RETYPE': False, 
 
-    # 'SET_PASSWORD_RETYPE': True,
-    # 'LOGOUT_ON_PASSWORD_CHANGE': True, 
-    # 'SEND_ACTIVATION_EMAIL': True,
-    # 'SEND_CONFIRMATION_EMAIL':True,
+    'SET_PASSWORD_RETYPE': True,
+    'LOGOUT_ON_PASSWORD_CHANGE': True, 
+    
+    'SEND_CONFIRMATION_EMAIL':True,
     
     # 'SERIALIZERS': {
     #     'user_create': 'core.serializers.CustomUserCreateSerializer',
@@ -201,8 +204,10 @@ DJOSER = {
 
 
 
-# EMAIL_BACKEND  = 'django.mail.backends.smtp.EmailBackend' 
-EMAIL_HOST = ''
-EMAIL_PORT = 587
+# EMAIL_BACKEND  = 'django.core.mail.backends.smtp.EmailBackend' 
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 2525
+EMAIL_USERNAME = ''
 EMAIL_PASSWORD = ''
-USE_TLS = True
+
+#USE_TLS = True
