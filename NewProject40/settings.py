@@ -93,7 +93,7 @@ WSGI_APPLICATION = 'NewProject40.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'project_402',
+        'NAME': 'Studebt',
         'HOST': 'localhost', 
         'USER': 'root', 
         'PASSWORD': config('PASSWORD')
