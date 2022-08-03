@@ -55,7 +55,7 @@ class School (models.Model):
 class Parent (models.Model):
 
     first_name = models.CharField(max_length= 255)
-    first_name = models.CharField(max_length= 255)
+    last_name = models.CharField(max_length= 255)
     user = models.OneToOneField(USER, on_delete=models.CASCADE)
 
     
