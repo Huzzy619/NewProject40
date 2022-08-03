@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 import os
 from datetime import timedelta
-from decouple import config 
+from decouple import config
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -37,10 +37,11 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'core',
     'mydebtors',
-    
-    'rest_framework', 
+
+    'rest_framework',
     'djoser',
-    #'debug_toolbar',
+
+    'debug_toolbar',
     'jazzmin',
     'django_filters',
     'social_django',
@@ -64,15 +65,21 @@ MIDDLEWARE = [
     'social_django.middleware.SocialAuthExceptionMiddleware',
 
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    #'debug_toolbar.middleware.DebugToolbarMiddleware',
-    
+    'corsheaders.middleware.CorsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+
+
+
 ]
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 ROOT_URLCONF = 'NewProject40.urls'
 
@@ -107,11 +114,11 @@ WSGI_APPLICATION = 'NewProject40.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Studebt',
-        'HOST': 'localhost', 
-        'USER': 'root', 
-        'PASSWORD': config('PASSWORD')
-        #
+        'NAME': 'railway',  # 'Studebt'
+        'HOST': 'containers-us-west-64.railway.app',  # 'localhost'
+        'USER': 'root',
+        'PASSWORD': 'rSGZpuqcgL9YXv3Lk4JO',  # config('PASSWORD')
+        'PORT': '5817',
     }
 }
 
@@ -135,11 +142,10 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-
 INTERNAL_IPS = [
-   
+
     "127.0.0.1",
-    
+
 ]
 
 # Internationalization
@@ -174,8 +180,8 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 
     'social_core.backends.google.GoogleOAuth2'
-    
-    #'my_debtors.backends.StudentBackend',
+
+    # 'my_debtors.backends.StudentBackend',
 ]
 
 
@@ -186,53 +192,60 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-   'AUTH_HEADER_TYPES': ('JWT',),
-   'ACCESS_TOKEN_LIFETIME': timedelta(days=5),
-   
+    'AUTH_HEADER_TYPES': ('JWT',),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=5),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=10),
+    'AUTH_TOKEN_CLASSES': (
+        'rest_framework_simplejwt.tokens.AccessToken',
+    )
+
 }
 
 SITE_NAME = ('Studebt')
 
 DJOSER = {
-    
 
-    #'LOGIN_FIELD': 'reg_no',
-    
+
+    # 'LOGIN_FIELD': 'reg_no',
+
     'ACTIVATION_URL': 'activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
 
     'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
-    'PASSWORD_RESET_CONFIRM_RETYPE':True,
+    'PASSWORD_RESET_CONFIRM_RETYPE': True,
     'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
     'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True,
-    'USER_CREATE_PASSWORD_RETYPE': False, 
+    'USER_CREATE_PASSWORD_RETYPE': False,
 
     'SET_PASSWORD_RETYPE': True,
-    'LOGOUT_ON_PASSWORD_CHANGE': True, 
-    
-    'SEND_CONFIRMATION_EMAIL':True,
-    
-    # 'SERIALIZERS': {
-    #     'user_create': 'core.serializers.CustomUserCreateSerializer',
-    #     #'current_user': 'core.serializers.UserSerializer',
+    'LOGOUT_ON_PASSWORD_CHANGE': True,
 
-    # },
+    'SEND_CONFIRMATION_EMAIL': True,
+    'SOCIAL_AUTH_TOKEN_STRATEGY': 'djoser.social.token.jwt.TokenStrategy',
+    'SOCIAL_AUTH_ALLOWED_REDIRECT_URIS': ['https://localhost:8000'],
+
+    'SERIALIZERS': {
+        'user_create': 'core.serializers.ParentSerializer',
+        'user': 'core.serializers.ParentSerializer',
+        'current_user': 'core.serializers.ParentSerializer',
+
+    },
 
 
 }
 
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '764855776870-4voe7ndvr9qa970q23d51tqvkibaihc9.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['https://www.googleapis.com/auth/userinfo.email',
+                                   'https://www.googleapis.com/auth/userinfo.profile', 'openid']
+SOCIAL_AUTH_GOOGLE_OAUTH2_EXTRA_DATA = ['first_name', 'last_name']
 
 
+# EMAIL_BACKEND  = 'django.core.mail.backends.smtp.EmailBackend'
 
-
-
-# EMAIL_BACKEND  = 'django.core.mail.backends.smtp.EmailBackend' 
-
-EMAIL_HOST = 'localhost'
-EMAIL_PORT = config('EMAIL_PORT')
-EMAIL_USERNAME = config('EMAIL_USERNAME')
-EMAIL_PASSWORD = config('EMAIL_PASSWORD')
+# EMAIL_HOST = 'localhost'
+# EMAIL_PORT = config('EMAIL_PORT')
+# EMAIL_USERNAME = config('EMAIL_USERNAME')
+# EMAIL_PASSWORD = config('EMAIL_PASSWORD')
 
 #USE_TLS = True
-
-
