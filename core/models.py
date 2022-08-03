@@ -54,8 +54,8 @@ class School (models.Model):
 # This is the profile for each school (logo, location, dates)
 class Parent (models.Model):
 
-    fname = models.CharField(max_length= 255)
-    lname = models.CharField(max_length= 255)
+    first_name = models.CharField(max_length= 255)
+    first_name = models.CharField(max_length= 255)
     user = models.OneToOneField(USER, on_delete=models.CASCADE)
 
     

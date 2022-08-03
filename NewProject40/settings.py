@@ -43,6 +43,11 @@ INSTALLED_APPS = [
     #'debug_toolbar',
     'jazzmin',
     'django_filters',
+    'social_django',
+    'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
+
+
 
 
     'django.contrib.admin',
@@ -56,6 +61,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'social_django.middleware.SocialAuthExceptionMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -64,6 +71,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     #'debug_toolbar.middleware.DebugToolbarMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'NewProject40.urls'
@@ -79,6 +87,12 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
+
+
+
             ],
         },
     },
@@ -121,11 +135,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-AUTHENTICATION_BACKENDS = [
-
-    'django.contrib.auth.backends.ModelBackend',
-    #'my_debtors.backends.StudentBackend',
-]
 
 INTERNAL_IPS = [
    
@@ -160,6 +169,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'core.CustomUser'
 
 
+AUTHENTICATION_BACKENDS = [
+
+    'django.contrib.auth.backends.ModelBackend',
+
+    'social_core.backends.google.GoogleOAuth2'
+    
+    #'my_debtors.backends.StudentBackend',
+]
+
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -170,6 +188,7 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
    'AUTH_HEADER_TYPES': ('JWT',),
    'ACCESS_TOKEN_LIFETIME': timedelta(days=5),
+   
 }
 
 SITE_NAME = ('Studebt')
@@ -204,6 +223,9 @@ DJOSER = {
 
 
 
+
+
+
 # EMAIL_BACKEND  = 'django.core.mail.backends.smtp.EmailBackend' 
 
 EMAIL_HOST = 'localhost'
@@ -212,3 +234,5 @@ EMAIL_USERNAME = config('EMAIL_USERNAME')
 EMAIL_PASSWORD = config('EMAIL_PASSWORD')
 
 #USE_TLS = True
+
+
