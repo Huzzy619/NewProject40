@@ -23,5 +23,6 @@ urlpatterns = [
     path('auth/', include('djoser.urls.jwt')),
     path('auth/', include('djoser.social.urls')),
 
+    path('__debug__/', include('debug_toolbar.urls')),
     path('studebt/', include('core.urls'))
 ]

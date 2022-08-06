@@ -114,11 +114,11 @@ WSGI_APPLICATION = 'NewProject40.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'railway',  # 'Studebt'
-        'HOST': 'containers-us-west-64.railway.app',  # 'localhost'
+        'NAME': config ('NAME'),#'railway',  # 'Studebt'
+        'HOST': 'localhost', #'containers-us-west-64.railway.app'
         'USER': 'root',
-        'PASSWORD': 'rSGZpuqcgL9YXv3Lk4JO',  # config('PASSWORD')
-        'PORT': '5817',
+        'PASSWORD': config('PASSWORD') #'rSGZpuqcgL9YXv3Lk4JO',  
+        #'PORT': '5817',
     }
 }
 
@@ -164,6 +164,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -215,7 +216,7 @@ DJOSER = {
     'PASSWORD_RESET_CONFIRM_RETYPE': True,
     'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
     'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True,
-    'USER_CREATE_PASSWORD_RETYPE': False,
+    'USER_CREATE_PASSWORD_RETYPE': True,
 
     'SET_PASSWORD_RETYPE': True,
     'LOGOUT_ON_PASSWORD_CHANGE': True,
@@ -224,12 +225,12 @@ DJOSER = {
     'SOCIAL_AUTH_TOKEN_STRATEGY': 'djoser.social.token.jwt.TokenStrategy',
     'SOCIAL_AUTH_ALLOWED_REDIRECT_URIS': ['https://localhost:8000'],
 
-    'SERIALIZERS': {
-        'user_create': 'core.serializers.ParentSerializer',
-        'user': 'core.serializers.ParentSerializer',
-        'current_user': 'core.serializers.ParentSerializer',
+    # 'SERIALIZERS': {
+    #     'user_create': 'core.serializers.ParentSerializer',
+    #     'user': 'core.serializers.ParentSerializer',
+    #     'current_user': 'core.serializers.ParentSerializer',
 
-    },
+    # },
 
 
 }
@@ -241,11 +242,13 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['https://www.googleapis.com/auth/userinfo.ema
 SOCIAL_AUTH_GOOGLE_OAUTH2_EXTRA_DATA = ['first_name', 'last_name']
 
 
-# EMAIL_BACKEND  = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND  = 'django.core.mail.backends.smtp.EmailBackend'
 
-# EMAIL_HOST = 'localhost'
-# EMAIL_PORT = config('EMAIL_PORT')
-# EMAIL_USERNAME = config('EMAIL_USERNAME')
-# EMAIL_PASSWORD = config('EMAIL_PASSWORD')
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = config('EMAIL_PORT')
+EMAIL_USERNAME = config('EMAIL_USERNAME')
+EMAIL_PASSWORD = config('EMAIL_PASSWORD')
 
-#USE_TLS = True
+USE_TLS = True
+
+

@@ -15,4 +15,4 @@ class ParentSerializer (ModelSerializer):
 
     class Meta:
         model = Parent
-        fields = ['id', 'name', 'user_id']
+        fields = ['id', 'first_name','last_name', 'user_id']
