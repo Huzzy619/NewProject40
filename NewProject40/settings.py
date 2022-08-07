@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'djoser',
+    'corsheaders',
 
     'debug_toolbar',
     'jazzmin',
@@ -62,8 +63,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'social_django.middleware.SocialAuthExceptionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 
+    'social_django.middleware.SocialAuthExceptionMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -148,6 +150,11 @@ INTERNAL_IPS = [
 
 ]
 
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:5500',
+    'http://127.0.0.1:5500'
+]
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
@@ -168,6 +175,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
@@ -178,9 +186,11 @@ AUTH_USER_MODEL = 'core.CustomUser'
 
 AUTHENTICATION_BACKENDS = [
 
+    'social_core.backends.google.GoogleOAuth2',
+
     'django.contrib.auth.backends.ModelBackend',
 
-    'social_core.backends.google.GoogleOAuth2'
+    
 
     # 'my_debtors.backends.StudentBackend',
 ]
@@ -207,8 +217,6 @@ SITE_NAME = ('Studebt')
 DJOSER = {
 
 
-    # 'LOGIN_FIELD': 'reg_no',
-
     'ACTIVATION_URL': 'activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
 
@@ -216,39 +224,44 @@ DJOSER = {
     'PASSWORD_RESET_CONFIRM_RETYPE': True,
     'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
     'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True,
+
     'USER_CREATE_PASSWORD_RETYPE': True,
 
-    'SET_PASSWORD_RETYPE': True,
+    #'SET_PASSWORD_RETYPE': True,
     'LOGOUT_ON_PASSWORD_CHANGE': True,
 
     'SEND_CONFIRMATION_EMAIL': True,
     'SOCIAL_AUTH_TOKEN_STRATEGY': 'djoser.social.token.jwt.TokenStrategy',
-    'SOCIAL_AUTH_ALLOWED_REDIRECT_URIS': ['https://localhost:8000'],
+    'SOCIAL_AUTH_ALLOWED_REDIRECT_URIS': ['http://localhost:8000'],
 
-    # 'SERIALIZERS': {
-    #     'user_create': 'core.serializers.ParentSerializer',
-    #     'user': 'core.serializers.ParentSerializer',
-    #     'current_user': 'core.serializers.ParentSerializer',
+    'SERIALIZERS': {
+        
+         'user_create_password_retype': 'core.serializers.CustomUserCreateSerializer',
 
-    # },
+     },
+
+     'SESSION_COOKIE_SECURE': False,
 
 
 }
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '764855776870-4voe7ndvr9qa970q23d51tqvkibaihc9.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['https://www.googleapis.com/auth/userinfo.email',
-                                   'https://www.googleapis.com/auth/userinfo.profile', 'openid']
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '868580744114-l3q29kv9kff70gu1mg68tjgskt158f5o.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['https://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth/userinfo.profile', 'openid']
+                                   
 SOCIAL_AUTH_GOOGLE_OAUTH2_EXTRA_DATA = ['first_name', 'last_name']
+
+
+# SOCIAL_AUTH_FIELDS_STORED_IN_SESSION = ['state']
 
 
 EMAIL_BACKEND  = 'django.core.mail.backends.smtp.EmailBackend'
 
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = config('EMAIL_PORT')
-EMAIL_USERNAME = config('EMAIL_USERNAME')
-EMAIL_PASSWORD = config('EMAIL_PASSWORD')
+EMAIL_USERNAME = '' #config('EMAIL_USERNAME')
+EMAIL_PASSWORD =  '' #config('EMAIL_PASSWORD')
 
-USE_TLS = True
+# USE_TLS = True
 
 

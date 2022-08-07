@@ -11,9 +11,8 @@ class SchoolViewSet (ModelViewSet):
     queryset = School.objects.all()
     serializer_class = SchoolSerializer
 
-
-class ParentViewSet (ModelViewSet):
-    queryset = Parent.objects.all()
-    serializer_class = ParentSerializer
+class PrincipalViewSet (ModelViewSet):
+    queryset = Principal.objects.all()
+    serializer_class = PrincipalSerializer
 
     

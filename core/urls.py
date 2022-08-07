@@ -3,9 +3,8 @@ from .views import *
 
 router = DefaultRouter()
 
-router.register('parent', ParentViewSet)
 router.register('school', SchoolViewSet)
-
+router.register('principal', PrincipalViewSet)
 
 urlpatterns = router.urls
 

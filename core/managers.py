@@ -1,15 +1,19 @@
 from django.contrib.auth.models import BaseUserManager
+from django.contrib.auth.hashers import make_password
+
 
 class CustomBaseManager (BaseUserManager):
     def _create_user(self,email, password, **extra_fields):
 
-        if email is None:
-            raise ValueError("A registration number must be provided")
+        if not email:
+            raise ValueError("An Email must be provided")
 
         user = self.model(
             email = self.normalize_email(email),
             **extra_fields
         )
+        
+
         user.set_password(password)
 
         user.save(using = self._db)
